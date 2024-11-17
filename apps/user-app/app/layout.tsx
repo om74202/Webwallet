@@ -27,13 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <Providers>
-        <AppbarClient/>
+    <html>
       <body className={inter.className}>
-        {children}
+        <Providers>
+          <AppbarClient/>
+          {children}
+        </Providers>
       </body>
-      </Providers>
+      
+      
     </html>
+      
+    
   );
 }
