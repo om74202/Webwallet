@@ -11,22 +11,28 @@ app.get('/',(req,res)=>{
 })
 
 app.post('hdfcWeebhook',async (req,res)=>{
-    const paymentInfo={
-        token:req.body.token,
-        userId:req.body.userId,
-        amount:req.body.amount
-    }
+    const paymentInfo: {
+        token: string;
+        userId: string;
+        amount: number
+    } = {
+        token: req.body.token,
+        userId: req.body.user_identifier,
+        amount: req.body.amount
+    };
     try{await db.$transaction([
         db.balance.update({
             where:{
                 userId:Number(paymentInfo.userId)
             },
             data:{
-                amount:Number(paymentInfo.amount)
+                amount:{
+                    increment:paymentInfo.amount
+                }
             }
         }),
     
-        db.onRampTransaction.updateMany({
+        db.onRampTransaction.update({
             where:{
                 token:paymentInfo.token
             },
