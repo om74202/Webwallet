@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Card({
+export function Cards({
   title,
   children,
 }: {
